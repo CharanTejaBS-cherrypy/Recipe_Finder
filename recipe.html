@@ -27,13 +27,58 @@
     <!-- Link to External Resources -->
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Lobster&display=swap" rel="stylesheet">
+    <style>
+        /* Loader styles */
+        .loader {
+            display: none; /* Hidden initially */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(149, 0, 255, 0.374); /* Semi-transparent royal purple */
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            color: rgb(51, 0, 79);
+        }
+
+        /* Animated Spinner */
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgb(106, 0, 255);
+            /*border-top: 8px solid white; */
+            border-radius: 10%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Fade-in effect for content */
+        .content.fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
+    <!-- Loader (initially hidden) -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+    </div>
     <div class="container">
         <header class="header">
             <h1>Recipe Finder</h1>
             <input type="text" id="ingredients" placeholder="Ingredients (comma-separated)" />
-            <button id="search-btn" class="btn">Search Recipes</button>
+            <button id="search-btn" class="btn" onclick="showLoader(event)">Search Recipes</button>
         </header>
         <div id="recipes" class="recipe-list"></div>
     </div>
@@ -41,5 +86,21 @@
         <p>© 2024 Recipe Finder. All rights reserved.</p>
     </footer>
     <script src="script.js"></script>
+    <script>
+        // Show the loader, then hide it after 5 seconds and redirect
+        function showLoader(event) {
+            event.preventDefault(); // Prevent default link behavior
+            const loader = document.getElementById('loader');
+            const content = document.getElementById('header');
+
+            loader.style.display = 'flex'; // Show the loader
+
+            setTimeout(() => {
+                loader.style.display = 'none'; // Hide the loader
+                content.classList.add('fade-in'); // Add fade-in effect to content
+                window.location.href = "recipe.html"; // Redirect to the page
+            }, 1000); // 4-second delay
+        }
+    </script>
 </body>
 </html>
